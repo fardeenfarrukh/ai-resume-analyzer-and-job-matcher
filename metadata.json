@@ -1,0 +1,5 @@
+{
+  "name": "AI Resume Analyzer & Job Matcher",
+  "description": "This platform enables users to upload their resumes and compare them against selected job postings. The system analyzes both documents to generate a match score and provide actionable suggestions for improving resume alignment.",
+  "requestFramePermissions": []
+}

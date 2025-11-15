@@ -1,0 +1,75 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.celeste-card {
+  @apply bg-celeste-light-card shadow-lg;
+}
+.dark .celeste-card {
+  background-color: rgba(31, 34, 78, 0.8);
+  @apply backdrop-blur-sm border border-celeste-pink/20 shadow-xl shadow-black/20;
+}
+.button-glow {
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.5), 0 0 20px rgba(255, 105, 180, 0.3);
+}
+.button-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 105, 180, 0.5);
+}
+/* Print Styles */
+@media print {
+  body {
+    background-color: #ffffff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  /* Force light theme for printing */
+  .dark {
+    background-color: #ffffff !important;
+    color: #1a1a2e !important;
+  }
+  .dark .dark\:bg-celeste-deep-blue\/80, 
+  .dark .dark\:bg-celeste-dark,
+  .dark .dark\:bg-celeste-deep-blue\/50,
+  .dark .bg-celeste-light-card,
+  .dark .bg-celeste-light-bg {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  .dark .dark\:text-white, 
+  .dark .dark\:text-celeste-text, 
+  .dark .dark\:text-celeste-muted {
+    color: #5a5a7e !important;
+  }
+  .dark .dark\:text-white {
+    color: #1a1a2e !important;
+  }
+  .dark .dark\:border-celeste-pink\/20,
+  .dark .border-gray-200 {
+    border-color: #e5e7eb !important;
+  }
+  .dark .dark\:bg-cyan-900\/50 { background-color: #cffafe !important; }
+  .dark .dark\:text-celeste-cyan { color: #0891b2 !important; }
+  .dark .dark\:border-celeste-cyan\/50 { border-color: #67e8f9 !important; }
+  .dark .dark\:bg-pink-900\/50 { background-color: #fce7f3 !important; }
+  .dark .dark\:text-celeste-pink { color: #be185d !important; }
+  .dark .dark\:border-celeste-pink\/50 { border-color: #f9a8d4 !important; }
+  .dark .stroke-celeste-cyan { stroke: #0891b2 !important; }
+  .dark .stroke-celeste-pink { stroke: #be185d !important; }
+  .dark .text-celeste-cyan { color: #0891b2 !important; }
+  .dark .text-celeste-pink { color: #be185d !important; }
+  .dark .dark\:text-red-400 { color: #ef4444 !important; }
+  .dark .text-red-500 { color: #ef4444 !important; }
+  .dark .stroke-red-500 { stroke: #ef4444 !important; }
+  .animate-fade-in {
+    animation: none !important;
+  }
+    .lg\:sticky {
+    position: static !important;
+  }
+}
