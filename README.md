@@ -2,7 +2,8 @@
 
 A sophisticated web application designed to help job seekers optimize their resumes for specific job descriptions. This tool leverages the power of Google's Gemini AI to provide a detailed analysis, a match score, and actionable suggestions for improvement, transforming a generic resume into a highly targeted application.
 
-![Application Screenshot](https://storage.googleapis.com/aistudio-project-images/6113b28f-9a99-45d6-a249-14a51e6b01b6.png)
+## Application Screenshot
+![Application Screenshot](app-screenshot.png)
 *(**Note:** You can replace the link above with a new screenshot of your running application.)*
 
 ---
