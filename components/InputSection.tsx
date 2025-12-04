@@ -27,7 +27,7 @@ const InputSection: React.FC<InputSectionProps> = ({
     if (file) {
       onResumeFileChange(file);
     }
-    // Reset file input value to allow re-uploading the same file
+    // Reset file input value so the same file can be re-uploaded if needed
     event.target.value = '';
   };
 
@@ -39,11 +39,14 @@ const InputSection: React.FC<InputSectionProps> = ({
         </label>
         
         <div className="mb-4">
+          {/* File upload area doubles as a drag-and-drop style input */}
           <label 
             htmlFor="resume-upload" 
             className="w-full flex flex-col items-center px-4 py-6 bg-celeste-light-bg dark:bg-celeste-dark border-2 border-dashed border-gray-300 dark:border-celeste-pink/30 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-celeste-deep-blue transition-colors duration-300"
           >
-            <svg className="w-8 h-8 text-celeste-light-muted dark:text-celeste-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+            <svg className="w-8 h-8 text-celeste-light-muted dark:text-celeste-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
             <span className="mt-2 text-sm leading-normal text-celeste-light-muted dark:text-celeste-muted text-center">
               {resumeFileName ? resumeFileName : "Select a file (PDF, DOCX, TXT)"}
             </span>
@@ -52,6 +55,7 @@ const InputSection: React.FC<InputSectionProps> = ({
           <input id="resume-upload" type="file" className="hidden" onChange={handleFileSelect} disabled={isLoading} />
         </div>
 
+        {/* Textarea fallback if user prefers pasting resume text */}
         <textarea
           id="resume"
           rows={8}
@@ -76,6 +80,7 @@ const InputSection: React.FC<InputSectionProps> = ({
           disabled={isLoading}
         />
       </div>
+      {/* Button disabled until both resume and job description are provided */}
       <button
         onClick={onSubmit}
         disabled={isLoading || (!resume && !resumeFileName) || !jobDescription}

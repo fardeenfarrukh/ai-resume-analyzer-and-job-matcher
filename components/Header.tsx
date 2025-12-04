@@ -9,7 +9,7 @@ interface HeaderProps {
   user: User | null;
   onLogout: () => void;
   onHistoryClick: () => void;
-  onAdminClick: () => void; // New prop for admin panel
+  onAdminClick: () => void; // Added for admin panel access
 }
 
 const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user, onLogout, onHistoryClick, onAdminClick }) => {
@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user
     <header className="bg-celeste-light-card/80 dark:bg-celeste-deep-blue/80 backdrop-blur-sm border-b border-gray-200 dark:border-celeste-pink/20 sticky top-0 z-10">
       <div className="container mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center">
+          {/* Logo icon for branding — simple checkmark style to suggest "resume success" */}
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-celeste-pink mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
@@ -27,6 +28,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user
         <div className="flex items-center space-x-4">
           {user ? (
             <>
+              {/* Show admin panel link only if user has admin privileges */}
               {user.isAdmin && (
                 <button
                   onClick={onAdminClick}
@@ -35,12 +37,14 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user
                   Admin Panel
                 </button>
               )}
-               <button
+              {/* History button lets users revisit saved reports */}
+              <button
                 onClick={onHistoryClick}
                 className="hidden sm:block text-sm font-medium text-celeste-light-muted dark:text-celeste-muted hover:text-celeste-light-text dark:hover:text-white transition-colors duration-200"
               >
                 My History
               </button>
+              {/* Display logged-in user's email for clarity */}
               <span className="hidden sm:block text-sm text-celeste-light-muted dark:text-celeste-muted border-l border-gray-300 dark:border-celeste-muted/30 pl-4">
                 {user.email}
               </span>
@@ -53,6 +57,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user
             </>
           ) : (
             <>
+              {/* If no user is logged in, show login/signup options */}
               <button 
                 onClick={() => onAuthClick('login')}
                 className="hidden sm:block text-sm font-medium text-celeste-light-muted dark:text-celeste-muted hover:text-celeste-light-text dark:hover:text-white transition-colors duration-200"
@@ -67,6 +72,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onAuthClick, user
               </button>
             </>
           )}
+          {/* Theme toggle button (light/dark mode) */}
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
         </div>
       </div>

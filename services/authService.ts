@@ -22,13 +22,14 @@ import type { User } from '../types';
 
 // IMPORTANT: Replace with your app's Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCaaTw4vqJrxAQxOFDTGgY1_tIe4IKo-J4",
-  authDomain: "ai-resume-analyzer-b10c9.firebaseapp.com",
-  projectId: "ai-resume-analyzer-b10c9",
-  storageBucket: "ai-resume-analyzer-b10c9.appspot.com",
-  messagingSenderId: "624415482659",
-  appId: "1:624415482659:web:61580c162bda1497d6e296"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

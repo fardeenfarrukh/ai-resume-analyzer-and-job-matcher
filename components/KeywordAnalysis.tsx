@@ -5,6 +5,8 @@ interface KeywordAnalysisProps {
   missingKeywords: string[];
 }
 
+// Small pill component for displaying keywords.
+// The styling changes depending on whether it's a match or a missing keyword.
 const KeywordPill: React.FC<{ text: string, type: 'match' | 'miss' }> = ({ text, type }) => {
   const baseClasses = 'px-3 py-1 text-sm font-medium rounded-full transition-transform hover:scale-110';
   const typeClasses = type === 'match'
@@ -12,7 +14,6 @@ const KeywordPill: React.FC<{ text: string, type: 'match' | 'miss' }> = ({ text,
     : 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-celeste-pink border border-pink-300 dark:border-celeste-pink/50';
   return <span className={`${baseClasses} ${typeClasses}`}>{text}</span>;
 };
-
 
 const KeywordAnalysis: React.FC<KeywordAnalysisProps> = ({ matchingKeywords, missingKeywords }) => {
   return (
@@ -28,6 +29,7 @@ const KeywordAnalysis: React.FC<KeywordAnalysisProps> = ({ matchingKeywords, mis
           {matchingKeywords.length > 0 ? (
             matchingKeywords.map((keyword, index) => <KeywordPill key={`match-${index}`} text={keyword} type="match" />)
           ) : (
+            // Helpful fallback when no strong matches are found
             <p className="text-sm text-celeste-light-muted dark:text-celeste-muted">No strong keyword matches found.</p>
           )}
         </div>
@@ -43,6 +45,7 @@ const KeywordAnalysis: React.FC<KeywordAnalysisProps> = ({ matchingKeywords, mis
           {missingKeywords.length > 0 ? (
             missingKeywords.map((keyword, index) => <KeywordPill key={`miss-${index}`} text={keyword} type="miss" />)
           ) : (
+            // Positive fallback when nothing is missing
             <p className="text-sm text-celeste-light-muted dark:text-celeste-muted">Great job! No major keywords seem to be missing.</p>
           )}
         </div>

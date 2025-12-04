@@ -11,9 +11,10 @@ interface HistoryModalProps {
 
 const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, reports, onLoadReport, onDeleteReport }) => {
   if (!isOpen) {
-    return null;
+    return null; // don’t render anything if modal is closed
   }
 
+  // Format savedAt timestamps into something readable for users
   const formatDateTime = (isoString: string) => {
     return new Date(isoString).toLocaleString(undefined, {
       dateStyle: 'medium',
@@ -31,13 +32,14 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, reports, o
     >
       <div 
         className="relative bg-celeste-light-card dark:bg-celeste-deep-blue/90 border border-gray-200 dark:border-celeste-pink/20 rounded-lg shadow-xl w-full max-w-2xl m-4"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} // prevent accidental close when clicking inside
       >
         <div className="p-6 border-b border-gray-200 dark:border-celeste-pink/20">
             <h2 id="history-modal-title" className="text-xl font-bold text-celeste-light-text dark:text-white">
-            My Analysis History
+              My Analysis History
             </h2>
-             <button 
+            {/* Close button in top-right corner */}
+            <button 
                 onClick={onClose}
                 className="absolute top-4 right-4 text-celeste-light-muted dark:text-celeste-muted hover:text-celeste-light-text dark:hover:text-white transition-colors"
                 aria-label="Close modal"
@@ -50,13 +52,17 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, reports, o
 
         <div className="p-6 max-h-[60vh] overflow-y-auto">
           {reports.length === 0 ? (
+            // Empty state message when user hasn’t saved anything yet
             <p className="text-center text-celeste-light-muted dark:text-celeste-muted">
               You haven't saved any reports yet. After an analysis, click "Save Report" to add it to your history.
             </p>
           ) : (
             <ul className="space-y-4">
               {reports.map((report) => (
-                <li key={report.id} className="bg-celeste-light-bg dark:bg-celeste-dark p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <li 
+                  key={report.id} 
+                  className="bg-celeste-light-bg dark:bg-celeste-dark p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                >
                   <div className="flex-grow">
                     <p className="font-semibold text-celeste-light-text dark:text-white">{report.jobTitle}</p>
                     <p className="text-sm text-celeste-light-muted dark:text-celeste-muted">
@@ -64,12 +70,14 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ isOpen, onClose, reports, o
                     </p>
                   </div>
                   <div className="flex-shrink-0 flex items-center gap-2 self-end sm:self-center">
+                    {/* Load button restores a saved report into the dashboard */}
                     <button
                       onClick={() => onLoadReport(report)}
                       className="text-sm font-medium bg-celeste-pink text-white px-3 py-1 rounded-md hover:bg-opacity-80 transition-colors"
                     >
                       Load
                     </button>
+                    {/* Delete button removes report from history */}
                     <button
                       onClick={() => onDeleteReport(report.id)}
                       className="text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors"

@@ -9,12 +9,14 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ score }) => {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
 
+  // Decide text color based on score range
   const getScoreColor = (s: number) => {
     if (s < 50) return 'text-red-500 dark:text-red-400';
     if (s < 75) return 'text-pink-500 dark:text-celeste-pink';
     return 'text-cyan-500 dark:text-celeste-cyan';
   };
   
+  // Stroke color for the circular progress bar
   const getStrokeColor = (s: number) => {
     if (s < 50) return 'stroke-red-500';
     if (s < 75) return 'stroke-celeste-pink';
@@ -27,6 +29,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ score }) => {
       <div className="relative w-32 h-32">
         <svg className="w-full h-full" viewBox="0 0 120 120">
           <defs>
+              {/* Glow filter makes the progress ring stand out visually */}
               <filter id="glow">
                   <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
                   <feMerge>
@@ -35,6 +38,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ score }) => {
                   </feMerge>
               </filter>
           </defs>
+          {/* Background circle (gray track) */}
           <circle
             className="stroke-current text-gray-200 dark:text-celeste-deep-blue"
             strokeWidth="10"
@@ -43,6 +47,8 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ score }) => {
             cx="60"
             cy="60"
           />
+          {/* Foreground circle (progress ring).
+              Rotated -90deg so progress starts at the top instead of the right. */}
           <circle
             className={`transform -rotate-90 origin-center transition-all duration-1000 ease-out ${getStrokeColor(score)}`}
             strokeWidth="10"
@@ -56,6 +62,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ score }) => {
             style={{ filter: 'url(#glow)' }}
           />
         </svg>
+        {/* Numeric score displayed in the center */}
         <div className={`absolute inset-0 flex items-center justify-center text-3xl font-bold ${getScoreColor(score)}`}>
           {score}%
         </div>

@@ -16,12 +16,14 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result, currentUser
   const [isShareCopied, setIsShareCopied] = useState(false);
   const [isReportSaved, setIsReportSaved] = useState(false);
 
-  // Reset view when result changes
+  // Whenever a new result comes in, reset view and saved state.
+  // This ensures users always start fresh on "Analysis Report" instead of staying on a previous tab.
   useEffect(() => {
     setView('analysis');
-    setIsReportSaved(false); // Reset saved state for new reports
+    setIsReportSaved(false);
   }, [result]);
 
+  // Export uses the browser's print dialog — simple but effective for PDF generation.
   const handleExport = () => {
     try {
       window.print();
@@ -31,16 +33,18 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result, currentUser
     }
   };
 
+  // Share creates a URL with encoded report data.
+  // Using btoa + encodeURIComponent ensures even special characters are preserved safely.
   const handleShare = () => {
     try {
       const jsonString = JSON.stringify(result);
-      // Use a robust encoding method that handles all Unicode characters
       const encodedData = btoa(unescape(encodeURIComponent(jsonString)));
       const url = `${window.location.origin}${window.location.pathname}#report=${encodedData}`;
       
       navigator.clipboard.writeText(url).then(() => {
         setIsShareCopied(true);
-        setTimeout(() => setIsShareCopied(false), 2500); // Reset after 2.5 seconds
+        // Reset "Link Copied!" message after 2.5 seconds
+        setTimeout(() => setIsShareCopied(false), 2500);
       }).catch(err => {
         console.error("Failed to copy URL:", err);
         alert("Could not copy link to clipboard. Please copy it manually.");
@@ -53,9 +57,10 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result, currentUser
 
   const handleSave = () => {
     onSaveReport();
-    setIsReportSaved(true);
+    setIsReportSaved(true); // Prevents multiple saves of the same report
   };
 
+  // Helper for styling tab buttons — highlights the active one
   const getButtonClass = (buttonView: typeof view) => {
     const base = "px-4 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out";
     if (view === buttonView) {
@@ -67,6 +72,7 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result, currentUser
   return (
     <div className="bg-celeste-light-card dark:bg-celeste-deep-blue/80 border border-gray-200 dark:border-celeste-pink/20 p-6 rounded-lg space-y-8 animate-fade-in">
       
+      {/* Tab buttons for switching views */}
       <div className="flex justify-center gap-2 md:gap-4 no-print">
         <button onClick={() => setView('analysis')} className={getButtonClass('analysis')}>
           Analysis Report
@@ -106,6 +112,7 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result, currentUser
         <ResumeView title="Improved Resume" text={result.improvedResumeText} />
       )}
 
+      {/* Action buttons: Save, Share, Export */}
       <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4 no-print">
         {currentUser && (
            <button
